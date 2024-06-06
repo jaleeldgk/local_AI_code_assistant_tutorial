@@ -81,7 +81,7 @@
        }
      }
      ```
-   - **Note:** Replace `apiBase` URL with the IP of your MacOS host where LMStudio is running (check with `ipconfig | grep inet`).
+   - **Note:** Replace BOTH `apiBase` URLs with the IP of your MacOS host where LMStudio is running (check with `ifconfig -a | grep inet`).
 
 - **Restart VSCode.**
 - **Test connection:**
