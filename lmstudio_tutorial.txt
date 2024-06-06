@@ -1,0 +1,117 @@
+# General Local AI usage
+
+1) Download LMStudio:
+	https://lmstudio.ai/
+
+2) In LMStudio, type this in search:
+	`bartowski/Codestral-22B-v0.1-GGUF`
+
+3) Download the model that ends with `Q8_0` on the right
+
+	NOTE: the Q8_0 model eats minimum 23.30GB RAM when loaded. If you want it to consume less RAM, use Q6_K with slightly less quality
+
+4) In AI Chat window, load the Codestral model
+
+5) Ensure the folowing settings on the right:
+
+	- Preset: Mistral Instruct
+
+	- Clear the System Prompt
+
+	- Context Length: 8192
+
+	- Temperature: 0.8
+
+	- Tokens to generate: -1
+
+	- CPU Threads: 10
+
+	- GPU Offload: Max
+
+	- GPU Backend: Metal llama.cpp
+
+	- (below) Flash Attention: on
+
+
+# VSCode local AI plugin (Continue.dev)
+
+1) Set up LMStudio first as in point 1
+- Enable API server in LMStudio:
+
+	- select arrow tab (Local Server) on the left
+
+	- click "Start Server"
+
+- Install Continue.dev plugin for VSCode (also available in Jetbrains)
+
+	- View -> Extensions
+
+	- search for "Continue"
+
+	- Install
+
+- Continue.dev configuration
+
+	- Before doing anything, go to Continue plugin settings and disable Telemetry on main page
+
+	- Open config file: 
+		vim ~/.continue/config.json
+
+	- Replace it with:
+
+```
+{
+  "models": [
+    {
+      "title": "LM Studio",
+      "provider": "lmstudio",
+      "model": "codestral",
+      "apiBase": "http://192.168.0.137:1234/v1/"
+    },
+    {
+      "title": "Llama 3",
+      "provider": "ollama",
+      "model": "llama3"
+    },
+    {
+      "title": "Ollama",
+      "provider": "ollama",
+      "model": "AUTODETECT"
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "test",
+      "prompt": "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+      "description": "Write unit tests for highlighted code"
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "codestral",
+    "provider": "lmstudio",
+    "model": "codestral",
+    "apiBase": "http://192.168.0.137:1234/v1/"
+  },
+  "allowAnonymousTelemetry": false,
+  "embeddingsProvider": {
+    "provider": "transformers.js"
+  }
+}
+```
+
+Note: replace apiBase URL with the IP of your MacOS host where LMStudio is running (check with `ipconfig | grep inet`)
+
+- Restart VSCode
+- Test connection by opening Continue tab in VScode (on the left) and type in 'hello'. You may use this window as a normal chatbot AI running fully locally.
+- You can select any code and add to chat (Ctrl+L) or Edit (Ctrl+I)
+- You can press Ctrl+I in a code window and a window will pop up to write a prompt for generating any code. You can then accept or reject it.
+- Verify that tab auto-complete works (AI suggests code continuation in grey, press TAB to accept)
+- If auto-complete is stuck, you can always Ctrl+I and directly prompt it to continue the code
+
+- Learn how to provide additional context here:
+	https://docs.continue.dev/customization/context-providers
+  You can also click "Add Context" in the chat window with options to bring in files, folders, terminal output into prompt context.
+
+- Learn how to use Continue commands directly in the code window:
+	https://docs.continue.dev/customization/slash-commands
+
