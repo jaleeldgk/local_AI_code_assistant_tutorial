@@ -22,6 +22,16 @@
    - **GPU Backend:** Metal llama.cpp
    - **Flash Attention:** on (below)
 
+Example uses for AI chat:
+ - Chat about code, programming concepts
+ - Ask it to generate terminal commands, Docker commands, K8s etc.
+ - Ask it to modify formatting like JSON, add markdown, etc.
+ - Ask it to explain foreign code
+ - Ask it to rework code in a certain way, write comments, PR description, unit tests
+ - Paste in a PR diff to review (can be private code as it runs fully local)
+ - Paste in a GitHub issue discussion (or any long text) and ask it to summarize
+ - Modify system prompt (tab on the right) to force a certain kind of output (e.g. "You summarize discussions")
+
 # VSCode Local AI Plugin (Continue.dev)
 
 1. **Set up LMStudio first as in point 1.**
@@ -96,3 +106,15 @@
 
 - **Learn how to use Continue commands directly in the code window:**
   - [Slash Commands](https://docs.continue.dev/customization/slash-commands).
+
+# Advanced notes
+
+You can also try other LLM models like:
+- `TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF` - use `Q4_K_M` version
+- `TheBloke/deepseek-coder-33B-instruct-GGUF` - use `Q4_K_M` version and change Prompt Format (right tab) to Deepseek Coder
+
+You may need to increase context length (both for AI Chat window and Local Server) from 8192 to a higher value when pasting long discussions or a lot of code. Codestral and Mixtral support up to 32768 tokens.
+
+High amount of context increases RAM use so above a certain amount of text you can get errors. Use smaller Q size if you want to use a lot of context.
+
+Use system prompt (right tab) if the model is not behaving the way you want to. Keep the system prompt simple.
