@@ -14,16 +14,19 @@ Requirements: Apple Silicon with 32GB or more RAM
 
 4. **In the AI Chat window, load the Codestral model.**
 
-5. **Ensure the following settings on the right (expand Advanced Configuration)**
+5. **Ensure the following settings on the right:**
    - **Preset:** Mistral Instruct
    - **Clear the System Prompt**
+
+   **Expand Advanced Configuration:**
    - **Context Length:** 8192
    - **Temperature:** 0.8
    - **Tokens to generate:** -1
-   - **CPU Threads:** 10
    - **GPU Offload:** Max
    - **GPU Backend:** Metal llama.cpp
-   - **(further below) Flash Attention:** on
+
+   **Under Advanced Configuration > Model Initialization:**
+   - **Flash Attention:** on
 
 Example uses for AI chat:
  - Chat about code, programming concepts
