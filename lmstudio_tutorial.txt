@@ -1,17 +1,20 @@
 # General Local AI Usage
 
-1. **Download LMStudio:**
+Requirements: Apple Silicon with 32GB or more RAM
+
+1. **Download LMStudio for MacOS :**
    - [LMStudio](https://lmstudio.ai/)
 
 2. **In LMStudio, search for:**
    - `bartowski/Codestral-22B-v0.1-GGUF`
 
-3. **Download the model that ends with `Q8_0` on the right:**
-   - **Note:** The `Q8_0` model requires a minimum of 23.30GB RAM when loaded. If you want it to consume less RAM, use `Q6_K` with slightly less quality.
+3. **Download the model that ends with `Q6_K` on the right:**
+   - **Note:** The `Q6_K` model consumes 18.40GB of RAM when loaded. If you have more RAM to spare, you may try the `Q8_0` model which requires a minimum of 23.30GB RAM and has slightly higher quality and lower speed. The bigger model will require unlocking the wired memory limit with sysctl:
+`sudo sysctl iogpu.wired_limit_mb=50000`
 
 4. **In the AI Chat window, load the Codestral model.**
 
-5. **Ensure the following settings on the right:**
+5. **Ensure the following settings on the right (expand Advanced Configuration)**
    - **Preset:** Mistral Instruct
    - **Clear the System Prompt**
    - **Context Length:** 8192
@@ -20,7 +23,7 @@
    - **CPU Threads:** 10
    - **GPU Offload:** Max
    - **GPU Backend:** Metal llama.cpp
-   - **Flash Attention:** on (below)
+   - **(further below) Flash Attention:** on
 
 Example uses for AI chat:
  - Chat about code, programming concepts
@@ -31,6 +34,10 @@ Example uses for AI chat:
  - Paste in a PR diff to review (can be private code as it runs fully local)
  - Paste in a GitHub issue discussion (or any long text) and ask it to summarize
  - Modify system prompt (tab on the right) to force a certain kind of output (e.g. "You summarize discussions")
+
+Test the AI directly in LMStudio chat before proceeding further. If you see errors such as [control_29] in the output window, it could mean the LLM did not fit into RAM. You might need to turn off some other apps or go for a smaller Q# model like Q4. Ignore the iQ# versions.
+
+Next we will configure the VSCode plugin which connects to LMStudio. VSCode can be in a VM if you prefer, with LMStudio on host. It needs to be able to connect to the LMStudio server running on the host.
 
 # VSCode Local AI Plugin (Continue.dev)
 
@@ -99,10 +106,15 @@ Example uses for AI chat:
   - You can select any code and add it to chat (Ctrl+L) or Edit (Ctrl+I).
   - Press Ctrl+I in a code window, and a window will pop up to write a prompt for generating any code. You can then accept or reject it.
   - Verify that tab auto-complete works (AI suggests code continuation in grey, press TAB to accept).
+  - You may try a partially written factorial function in the language of your choice to test TAB code completion
   - If auto-complete is stuck, you can always Ctrl+I and directly prompt it to continue the code.
+  - You can always disable tab auto-complete in Continue extension settings in VSCode
+  - You can expect text generation performance of about 1 word per second 
 
 - **Learn how to provide additional context here:**
   - [Context Providers](https://docs.continue.dev/customization/context-providers). You can also click "Add Context" in the chat window with options to bring in files, folders, terminal output into prompt context.
+
+- **Try codebase awareness - click 'Use codebase' in the Continue prompt window when writing the prompt. Continue will vectorize your codebase so it can intelligently bring in snippets of code that are releant to the prompt. You can ask 'where is X done' in the codebase and it will find it.**
 
 - **Learn how to use Continue commands directly in the code window:**
   - [Slash Commands](https://docs.continue.dev/customization/slash-commands).
@@ -117,4 +129,4 @@ You may need to increase context length (both for AI Chat window and Local Serve
 
 High amount of context increases RAM use so above a certain amount of text you can get errors. Use smaller Q size if you want to use a lot of context.
 
-Use system prompt (right tab) if the model is not behaving the way you want to. Keep the system prompt simple.
+Use system prompt (right tab) if the model is not behaving the way you want to. Keep the system prompt simple. Remember to change it or clear it when you move to a different topic.
