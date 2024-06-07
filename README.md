@@ -46,6 +46,7 @@ Next we will configure the VSCode plugin which connects to LMStudio. VSCode can 
 2. **Enable API server in LMStudio:**
    - Select the arrow tab (Local Server) on the left.
    - Click "Start Server".
+   - Ensure similar settings in the Server window as in point 5 above.
 
 3. **Install Continue.dev plugin for VSCode (also available in Jetbrains):**
    - Go to `View` -> `Extensions`.
@@ -54,6 +55,7 @@ Next we will configure the VSCode plugin which connects to LMStudio. VSCode can 
 
 4. **Continue.dev configuration:**
    - Before doing anything, go to Continue plugin settings and disable Telemetry on the main page.
+   - Ignore the Continue setup prompt in VSCode, we will edit the config file instead
    - Open the config file:
      ```sh
      vim ~/.continue/config.json
@@ -114,19 +116,19 @@ Next we will configure the VSCode plugin which connects to LMStudio. VSCode can 
 - **Learn how to provide additional context here:**
   - [Context Providers](https://docs.continue.dev/customization/context-providers). You can also click "Add Context" in the chat window with options to bring in files, folders, terminal output into prompt context.
 
-- **Try codebase awareness - click 'Use codebase' in the Continue prompt window when writing the prompt. Continue will vectorize your codebase so it can intelligently bring in snippets of code that are releant to the prompt. You can ask 'where is X done' in the codebase and it will find it.**
-
 - **Learn how to use Continue commands directly in the code window:**
   - [Slash Commands](https://docs.continue.dev/customization/slash-commands).
+
+- **Try codebase awareness - click `Use codebase` in the Continue prompt window when writing the prompt. Continue will vectorize your codebase so it can intelligently bring in snippets of code that are releant to the prompt. You can ask 'where is X done' in the codebase and it will find it.**
 
 # Advanced notes
 
 You can also try other LLM models like:
 - `TheBloke/Mixtral-8x7B-Instruct-v0.1-GGUF` - use `Q4_K_M` version
-- `TheBloke/deepseek-coder-33B-instruct-GGUF` - use `Q4_K_M` version and change Prompt Format (right tab) to Deepseek Coder
+- `TheBloke/deepseek-coder-33B-instruct-GGUF` - use `Q4_K_M` version and change Prompt Format (right tab) to Deepseek Coder in both Chat window and Server window
 
 You may need to increase context length (both for AI Chat window and Local Server) from 8192 to a higher value when pasting long discussions or a lot of code. Codestral and Mixtral support up to 32768 tokens.
 
 High amount of context increases RAM use so above a certain amount of text you can get errors. Use smaller Q size if you want to use a lot of context.
 
-Use system prompt (right tab) if the model is not behaving the way you want to. Keep the system prompt simple. Remember to change it or clear it when you move to a different topic.
+Use system prompt (right tab) if the model is not behaving the way you want to. Keep the system prompt simple. Remember to change it or clear it when you move to a different topic. A general use system prompt would be "You are a helpful coding assistant".
