@@ -1,8 +1,8 @@
 # General Local AI Usage
 
-Requirements: Apple Silicon with 32GB or more RAM
+Requirements: Latest Intel processor with 32GB or more RAM
 
-1. **Download LMStudio for MacOS :**
+1. **Download LMStudio for Windows :**
    - [LMStudio](https://lmstudio.ai/)
 
 2. **In LMStudio, search for:**
@@ -103,7 +103,7 @@ Next we will configure the VSCode plugin which connects to LMStudio. VSCode can 
        }
      }
      ```
-   - **Note:** Replace BOTH `apiBase` URLs with the IP of your MacOS host where LMStudio is running (check with `ifconfig -a | grep inet`).
+   - **Note:** Replace BOTH `apiBase` URLs with the IP of your Windows host where LMStudio is running (check with `ifconfig -a | grep inet`).
 
 - **Restart VSCode.**
 - **Test connection:**
